@@ -340,8 +340,8 @@ tr:hover td { background:var(--cream); }
     <div class="card-title">📋 Bugünkü Kayıtlar</div>
     <div class="tbl-wrap">
       <table>
-        <thead><tr><th>Saat</th><th>Şube</th><th>Yöntem</th><th>Brüt</th><th>Kom.</th><th>Net</th></tr></thead>
-        <tbody id="kasaTblBody"><tr><td colspan="6" class="empty-msg">Kayıt yok</td></tr></tbody>
+        <thead><tr><th>Saat</th><th>Şube</th><th>Yöntem</th><th>Brüt</th><th>Kom.</th><th>Net</th><th></th></tr></thead>
+        <tbody id="kasaTblBody"><tr><td colspan="7" class="empty-msg">Kayıt yok</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -604,6 +604,7 @@ const URUNLER = [
   { id:'cikolatasosu', ad:'Çikolata Sosu', fiyat:207.92,kdv:0.01, birim:'kg'   },
   { id:'parusa',       ad:'Paruşa',        fiyat:207.92,kdv:0.01, birim:'kg'   },
   { id:'ekler',        ad:'Ekler',         fiyat:207.92,kdv:0.01, birim:'kg'   },
+  { id:'sogukbaklava',  ad:'Soğuk Baklava', fiyat:650.00, kdv:0.01, birim:'kg'   },
 ];
 
 const KOMISYONLAR = {
@@ -773,11 +774,21 @@ function kasaKaydet() {
   showToast('✅ Kayıt eklendi');
 }
 
+function kasaSil(id) {
+  if (!confirm('Bu kaydı silmek istediğinize emin misiniz?')) return;
+  DB.kasaKayitlar = DB.kasaKayitlar.filter(k => k.id !== id);
+  saveData(DB);
+  renderKasaTablo();
+  updateOzetTab();
+  updateSubeCiroBadges();
+  showToast('🗑 Kayıt silindi');
+}
+
 function renderKasaTablo() {
   const today = document.getElementById('kasaTarih').value || todayStr();
   const kayitlar = DB.kasaKayitlar.filter(k => k.tarih === today);
   const tbody = document.getElementById('kasaTblBody');
-  if (!kayitlar.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-msg">Kayıt yok</td></tr>'; return; }
+  if (!kayitlar.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty-msg">Kayıt yok</td></tr>'; return; }
   tbody.innerHTML = kayitlar.map(k => `
     <tr>
       <td>${k.saat}</td>
@@ -786,6 +797,7 @@ function renderKasaTablo() {
       <td>${tl(k.brut)}</td>
       <td style="color:var(--red)">${k.kom>0?'−'+tl(k.kom+k.komKdv):'—'}</td>
       <td style="font-weight:700;color:var(--green)">${tl(k.net)}</td>
+      <td><button onclick="kasaSil(${k.id})" style="background:#fee2e2;border:none;border-radius:6px;padding:5px 9px;cursor:pointer;font-size:13px;color:#b91c1c;font-weight:600">✕</button></td>
     </tr>`).join('');
 }
 
