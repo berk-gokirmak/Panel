@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Beylerbeyi Profiterol — Yönetim</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --arnavut: #4a7c59;
+  --arnavut-light: #6aad7e;
+  --arnavut-pale: #eef6f1;
+  --florya: #1a6fa0;
+  --florya-light: #3a9fd0;
+  --florya-pale: #e8f4fb;
+  --gold: #c9943a;
+  --gold-light: #e8b96a;
+  --cream: #fdf8f0;
+  --cream2: #f5ede0;
+  --ink: #1a1208;
+  --ink2: #4a3c2a;
+  --ink3: #9a8a78;
+  --white: #ffffff;
+  --red: #c0392b;
+  --red-pale: #fdf0ee;
+  --green: #2d6a4f;
+  --green-pale: #eef6f1;
+  --shadow: 0 2px 16px rgba(26,18,8,0.08);
+  --shadow-lg: 0 8px 40px rgba(26,18,8,0.14);
+  --r: 14px;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { font-family:'Outfit',sans-serif; background:var(--cream); color:var(--ink); min-height:100vh; }
+
+/* HEADER */
+header {
+  background: var(--ink);
+  padding: 0 16px;
+  height: 58px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:200;
+}
+.logo-wrap { display:flex; align-items:center; gap:10px; }
+.logo-icon { font-size:22px; }
+.logo-text h1 { font-family:'Cormorant Garamond',serif; color:var(--cream); font-size:17px; font-weight:600; line-height:1.1; }
+.logo-text span { color:var(--gold); font-size:10px; letter-spacing:2.5px; text-transform:uppercase; }
+.header-date { color:var(--ink3); font-size:12px; background:rgba(255,255,255,0.07); padding:5px 12px; border-radius:20px; }
+
+/* NAV */
+nav {
+  background: #111;
+  display:flex; overflow-x:auto; scrollbar-width:none;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+nav::-webkit-scrollbar { display:none; }
+.nav-btn {
+  flex-shrink:0; background:none; border:none; color:rgba(255,255,255,0.45);
+  padding:12px 16px; font-family:'Outfit',sans-serif; font-size:12.5px; font-weight:500;
+  cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; transition:all .2s;
+}
+.nav-btn.active { color:var(--gold); border-bottom-color:var(--gold); }
+
+/* MAIN */
+main { max-width:700px; margin:0 auto; padding:16px 12px 80px; }
+.tab { display:none; }
+.tab.active { display:block; }
+
+/* CARDS */
+.card { background:var(--white); border-radius:var(--r); padding:18px; box-shadow:var(--shadow); margin-bottom:14px; border:1px solid rgba(26,18,8,0.06); }
+.card-title { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:600; color:var(--ink); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+
+/* SUBE SELECTOR */
+.sube-tabs { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+.sube-tab {
+  padding:14px 10px; border-radius:12px; border:2px solid transparent;
+  background:var(--white); cursor:pointer; text-align:center; transition:all .2s;
+  box-shadow:var(--shadow);
+}
+.sube-tab.arnavut.active { background:var(--arnavut-pale); border-color:var(--arnavut); }
+.sube-tab.florya.active  { background:var(--florya-pale);  border-color:var(--florya);  }
+.sube-tab-name { font-weight:700; font-size:14px; }
+.sube-tab.arnavut .sube-tab-name { color:var(--arnavut); }
+.sube-tab.florya  .sube-tab-name { color:var(--florya); }
+.sube-tab-ciro { font-size:11px; color:var(--ink3); margin-top:3px; }
+
+/* FORMS */
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+.form-row.full { grid-template-columns:1fr; }
+.fg { display:flex; flex-direction:column; gap:4px; }
+.fg label { font-size:10.5px; font-weight:700; color:var(--ink3); text-transform:uppercase; letter-spacing:.8px; }
+.fg input, .fg select, .fg textarea {
+  border:1.5px solid var(--cream2); border-radius:9px; padding:10px 12px;
+  font-family:'Outfit',sans-serif; font-size:14px; color:var(--ink);
+  background:var(--cream); outline:none; transition:border-color .2s;
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color:var(--gold); background:#fff; }
+.fg textarea { resize:vertical; min-height:70px; }
+
+.pfx { position:relative; }
+.pfx input { padding-left:28px; }
+.pfx-sign { position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--ink3); font-size:13px; pointer-events:none; }
+
+/* BUTTONS */
+.btn { display:inline-flex; align-items:center; gap:7px; padding:11px 20px; border-radius:10px; font-family:'Outfit',sans-serif; font-size:13.5px; font-weight:600; cursor:pointer; border:none; transition:all .15s; }
+.btn-primary { background:var(--ink); color:var(--cream); }
+.btn-primary:active { background:#333; transform:scale(.97); }
+.btn-arnavut { background:var(--arnavut); color:#fff; }
+.btn-florya  { background:var(--florya);  color:#fff; }
+.btn-sm { padding:7px 14px; font-size:12px; border-radius:8px; }
+.btn-ghost { background:var(--cream2); color:var(--ink2); border:1.5px solid rgba(26,18,8,0.1); }
+
+/* BADGES */
+.badge { display:inline-block; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:600; }
+.badge-green { background:#dcfce7; color:#15803d; }
+.badge-red   { background:#fee2e2; color:#b91c1c; }
+.badge-gold  { background:#fef3c7; color:#92400e; }
+.badge-blue  { background:#dbeafe; color:#1e40af; }
+.badge-gray  { background:#f3f4f6; color:#6b7280; }
+
+/* TABLES */
+.tbl-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:12.5px; }
+th { text-align:left; padding:8px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--ink3); border-bottom:2px solid var(--cream2); }
+td { padding:10px 10px; border-bottom:1px solid var(--cream2); vertical-align:middle; }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:var(--cream); }
+
+/* ÖZET KUTULAR */
+.ozet-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:14px; }
+.ozet-box { background:var(--white); border-radius:12px; padding:14px; box-shadow:var(--shadow); border:1px solid rgba(26,18,8,0.05); }
+.ozet-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.8px; color:var(--ink3); margin-bottom:5px; }
+.ozet-val { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:700; color:var(--ink); line-height:1; }
+.ozet-val.arnavut { color:var(--arnavut); }
+.ozet-val.florya  { color:var(--florya); }
+.ozet-sub { font-size:11px; color:var(--ink3); margin-top:4px; }
+
+/* HERO CIRO */
+.hero-ciro {
+  background: linear-gradient(135deg, var(--ink) 0%, #2d2010 100%);
+  border-radius:var(--r); padding:20px; margin-bottom:14px;
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+}
+.hero-label { font-size:11px; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
+.hero-amount { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:700; color:var(--gold-light); line-height:1; }
+.hero-net { font-size:13px; color:rgba(255,255,255,0.6); margin-top:5px; }
+
+/* STOK ITEM */
+.stok-row { display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--cream); border-radius:9px; margin-bottom:7px; border:1px solid rgba(26,18,8,0.05); }
+.stok-name { font-size:13px; font-weight:600; flex:1; }
+.stok-fiyat { font-size:11px; color:var(--ink3); }
+.stok-input { width:70px; border:1.5px solid var(--cream2); border-radius:7px; padding:6px 8px; font-family:'Outfit',sans-serif; font-size:13px; text-align:center; outline:none; background:#fff; }
+.stok-input:focus { border-color:var(--gold); }
+.stok-unit { font-size:10px; color:var(--ink3); width:28px; }
+
+/* FIRE SECTION */
+.fire-row { display:flex; align-items:center; gap:8px; padding:9px 12px; background:#fff8f5; border-radius:9px; margin-bottom:7px; border:1px solid #fde8df; }
+.fire-name { font-size:13px; font-weight:600; flex:1; color:var(--ink2); }
+.fire-input { width:65px; border:1.5px solid #fde8df; border-radius:7px; padding:6px 8px; font-family:'Outfit',sans-serif; font-size:13px; text-align:center; outline:none; background:#fff; }
+.fire-input:focus { border-color:var(--red); }
+.fire-maliyet { font-size:11px; color:var(--red); font-weight:600; }
+
+/* KOMISYON PANEL */
+.kom-box { background:var(--cream); border-radius:10px; padding:14px; margin-bottom:10px; border:1px solid rgba(26,18,8,0.07); }
+.kom-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.kom-platform { font-weight:700; font-size:14px; }
+.kom-rate { font-size:11px; color:var(--ink3); }
+.kom-row { display:flex; justify-content:space-between; font-size:13px; padding:5px 0; border-bottom:1px solid rgba(26,18,8,0.06); }
+.kom-row:last-child { border-bottom:none; font-weight:700; color:var(--red); }
+
+/* PERIOD TABS */
+.period-tabs { display:flex; gap:6px; margin-bottom:14px; }
+.period-btn { padding:7px 16px; border-radius:20px; border:1.5px solid var(--cream2); background:var(--white); font-family:'Outfit',sans-serif; font-size:12px; font-weight:600; cursor:pointer; color:var(--ink3); transition:all .2s; }
+.period-btn.active { background:var(--ink); color:var(--cream); border-color:var(--ink); }
+
+/* RAPOR GRID */
+.rapor-4 { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+
+/* TOAST */
+.toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(70px); background:var(--ink); color:var(--cream); padding:11px 22px; border-radius:25px; font-size:13px; font-weight:500; box-shadow:var(--shadow-lg); transition:transform .3s cubic-bezier(.34,1.56,.64,1); z-index:999; white-space:nowrap; }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* DIVIDER */
+.divider { height:1px; background:var(--cream2); margin:16px 0; }
+
+/* SECTION HEAD */
+.sec-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.sec-title { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:700; color:var(--ink); }
+
+.tag-arnavut { display:inline-block; background:var(--arnavut-pale); color:var(--arnavut); font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:6px; }
+.tag-florya  { display:inline-block; background:var(--florya-pale);  color:var(--florya);  font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:6px; }
+
+.empty-msg { text-align:center; color:var(--ink3); padding:24px 0; font-size:13px; }
+
+.warn-box { background:#fff8f0; border:1.5px solid #fdd; border-radius:10px; padding:12px 14px; margin-bottom:12px; font-size:13px; color:#7a3a1a; }
+
+@media(max-width:400px) {
+  .ozet-grid { grid-template-columns:1fr; }
+  .rapor-4 { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <div class="logo-icon">🥐</div>
+    <div class="logo-text">
+      <h1>Beylerbeyi Profiterol</h1>
+      <span>Yönetim Paneli</span>
+    </div>
+  </div>
+  <div class="header-date" id="headerDate"></div>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="goTab('ozet',this)">📊 Özet</button>
+  <button class="nav-btn" onclick="goTab('kasa',this)">💰 Kasa</button>
+  <button class="nav-btn" onclick="goTab('urun',this)">📦 Ürün Girişi</button>
+  <button class="nav-btn" onclick="goTab('fire',this)">🗑 Fire</button>
+  <button class="nav-btn" onclick="goTab('komisyon',this)">% Komisyon</button>
+  <button class="nav-btn" onclick="goTab('rapor',this)">📈 Rapor</button>
+</nav>
+
+<main>
+
+<!-- ══════════ ÖZET ══════════ -->
+<div id="tab-ozet" class="tab active">
+
+  <div class="hero-ciro">
+    <div>
+      <div class="hero-label">Bugün Toplam Brüt Ciro</div>
+      <div class="hero-amount" id="heroGross">₺0</div>
+      <div class="hero-net" id="heroNet">Net: ₺0 &nbsp;·&nbsp; KDV: ₺0</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:6px">2 Şube</div>
+      <div style="font-size:22px">🟢🟢</div>
+    </div>
+  </div>
+
+  <div class="ozet-grid">
+    <div class="ozet-box">
+      <div class="ozet-label">Arnavutköy</div>
+      <div class="ozet-val arnavut" id="ozArnavut">₺0</div>
+      <div class="ozet-sub" id="ozArnavutNet">Net: ₺0</div>
+    </div>
+    <div class="ozet-box">
+      <div class="ozet-label">Florya</div>
+      <div class="ozet-val florya" id="ozFlorya">₺0</div>
+      <div class="ozet-sub" id="ozFloryaNet">Net: ₺0</div>
+    </div>
+    <div class="ozet-box">
+      <div class="ozet-label">Toplam Maliyet</div>
+      <div class="ozet-val" id="ozMaliyet">₺0</div>
+      <div class="ozet-sub">Gelen ürün maliyeti</div>
+    </div>
+    <div class="ozet-box">
+      <div class="ozet-label">Fire Kaybı</div>
+      <div class="ozet-val" style="color:var(--red)" id="ozFire">₺0</div>
+      <div class="ozet-sub">Çöpe giden</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🕐 Son İşlemler</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Saat</th><th>Şube</th><th>Yöntem</th><th>Brüt</th><th>Net</th></tr></thead>
+        <tbody id="sonIslemTbody"><tr><td colspan="5" class="empty-msg">Henüz kayıt yok</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ KASA ══════════ -->
+<div id="tab-kasa" class="tab">
+  <div class="sec-head"><div class="sec-title">Kasa Girişi</div></div>
+
+  <div class="sube-tabs">
+    <div class="sube-tab arnavut active" id="kasaTabArnavut" onclick="selectSube('kasa','arnavut')">
+      <div class="sube-tab-name">Arnavutköy</div>
+      <div class="sube-tab-ciro" id="kasaCiroArnavut">₺0 bugün</div>
+    </div>
+    <div class="sube-tab florya" id="kasaTabFlorya" onclick="selectSube('kasa','florya')">
+      <div class="sube-tab-name">Florya</div>
+      <div class="sube-tab-ciro" id="kasaCiroFlorya">₺0 bugün</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">➕ Yeni Satış Kaydı</div>
+    <div class="form-row">
+      <div class="fg">
+        <label>Ödeme Yöntemi</label>
+        <select id="kasaOdeme">
+          <option value="nakit">Nakit</option>
+          <option value="kredi">Kredi Kartı</option>
+          <option value="trendyol">Trendyol Online</option>
+          <option value="getir">Getir Online</option>
+          <option value="yemeksepeti">Yemek Sepeti Online</option>
+          <option value="yemekkarti" id="yemekKartiOpt">Yemek Kartları</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Brüt Tutar (₺)</label>
+        <div class="pfx">
+          <span class="pfx-sign">₺</span>
+          <input type="number" id="kasaTutar" placeholder="0.00" min="0" step="0.01" oninput="kasaHesapla()">
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="fg">
+        <label>Tarih</label>
+        <input type="date" id="kasaTarih">
+      </div>
+      <div class="fg">
+        <label>Açıklama</label>
+        <input type="text" id="kasaAciklama" placeholder="Opsiyonel...">
+      </div>
+    </div>
+
+    <!-- KOMİSYON ÖNIZLEME -->
+    <div class="kom-box" id="kasaKomOnizleme" style="display:none">
+      <div class="kom-header">
+        <span class="kom-platform" id="kasaKomPlatform">—</span>
+        <span class="kom-rate" id="kasaKomOran">—</span>
+      </div>
+      <div class="kom-row"><span>Brüt Tutar</span><span id="kasaKomBrut">₺0</span></div>
+      <div class="kom-row"><span id="kasaKomSatir1L">Komisyon</span><span id="kasaKomSatir1V">₺0</span></div>
+      <div class="kom-row"><span>Komisyon KDV (%20)</span><span id="kasaKomKDV">₺0</span></div>
+      <div class="kom-row"><span>Ciro KDV (%10)</span><span id="kasaKomCiroKDV">₺0</span></div>
+      <div class="kom-row"><span>Net Kazanç</span><span id="kasaKomNet">₺0</span></div>
+    </div>
+
+    <button class="btn btn-primary" onclick="kasaKaydet()">💾 Kaydet</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Bugünkü Kayıtlar</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Saat</th><th>Şube</th><th>Yöntem</th><th>Brüt</th><th>Kom.</th><th>Net</th></tr></thead>
+        <tbody id="kasaTblBody"><tr><td colspan="6" class="empty-msg">Kayıt yok</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ ÜRÜN GİRİŞİ ══════════ -->
+<div id="tab-urun" class="tab">
+  <div class="sec-head"><div class="sec-title">Günlük Ürün Girişi</div></div>
+
+  <div class="sube-tabs">
+    <div class="sube-tab arnavut active" id="urunTabArnavut" onclick="selectSube('urun','arnavut')">
+      <div class="sube-tab-name">Arnavutköy</div>
+      <div class="sube-tab-ciro" id="urunMalArnavut">₺0 maliyet</div>
+    </div>
+    <div class="sube-tab florya" id="urunTabFlorya" onclick="selectSube('urun','florya')">
+      <div class="sube-tab-name">Florya</div>
+      <div class="sube-tab-ciro" id="urunMalFlorya">₺0 maliyet</div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="fg">
+      <label>Tarih</label>
+      <input type="date" id="urunTarih">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📦 Gelen Ürünler <span style="font-size:12px;color:var(--ink3);font-family:'Outfit'">(KDV %1 dahil fiyat)</span></div>
+    <div id="urunGirisListesi"></div>
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:11px;color:var(--ink3)">Toplam Maliyet (KDV dahil)</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700" id="urunToplamMaliyet">₺0,00</div>
+      </div>
+      <button class="btn btn-primary" onclick="urunKaydet()">💾 Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ FIRE ══════════ -->
+<div id="tab-fire" class="tab">
+  <div class="sec-head"><div class="sec-title">Fire Takibi</div></div>
+
+  <div class="sube-tabs">
+    <div class="sube-tab arnavut active" id="fireTabArnavut" onclick="selectSube('fire','arnavut')">
+      <div class="sube-tab-name">Arnavutköy</div>
+      <div class="sube-tab-ciro" id="fireKayipArnavut">₺0 kayıp</div>
+    </div>
+    <div class="sube-tab florya" id="fireTabFlorya" onclick="selectSube('fire','florya')">
+      <div class="sube-tab-name">Florya</div>
+      <div class="sube-tab-ciro" id="fireKayipFlorya">₺0 kayıp</div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="fg"><label>Tarih</label><input type="date" id="fireTarih"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🗑 Çöpe Giden Ürünler</div>
+    <div id="fireGirisListesi"></div>
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:11px;color:var(--ink3)">Toplam Fire Kaybı</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--red)" id="fireToplamKayip">₺0,00</div>
+      </div>
+      <button class="btn btn-primary" onclick="fireKaydet()">💾 Kaydet</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Fire Geçmişi</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Tarih</th><th>Şube</th><th>Ürün</th><th>Miktar</th><th>Maliyet</th></tr></thead>
+        <tbody id="fireTblBody"><tr><td colspan="5" class="empty-msg">Kayıt yok</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ KOMİSYON ══════════ -->
+<div id="tab-komisyon" class="tab">
+  <div class="sec-head"><div class="sec-title">Komisyon Hesabı</div></div>
+
+  <div class="warn-box">⚠️ Trendyol, Getir ve Yemek Sepeti komisyonları ay sonu toplam olarak girilir. Günlük kasa girişlerindeki online tutarlar buraya toplanır.</div>
+
+  <div class="card">
+    <div class="card-title">📅 Ay Sonu Komisyon Girişi</div>
+    <div class="form-row">
+      <div class="fg"><label>Ay / Yıl</label><input type="month" id="komAy"></div>
+      <div class="fg"><label>Şube</label>
+        <select id="komSube">
+          <option value="arnavut">Arnavutköy</option>
+          <option value="florya">Florya</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-bottom:10px">
+      <div class="kom-box">
+        <div class="kom-header"><span class="kom-platform">Trendyol</span><span class="kom-rate">%13 + KDV %20</span></div>
+        <div class="fg"><label>Aylık Trendyol Cirosu (₺)</label>
+          <div class="pfx"><span class="pfx-sign">₺</span><input type="number" id="komTrendyol" placeholder="0" oninput="komHesapla()"></div>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:var(--red)" id="komTrendyolSonuc"></div>
+      </div>
+      <div class="kom-box">
+        <div class="kom-header"><span class="kom-platform">Yemek Sepeti</span><span class="kom-rate">%13,5 + KDV %20</span></div>
+        <div class="fg"><label>Aylık YS Cirosu (₺)</label>
+          <div class="pfx"><span class="pfx-sign">₺</span><input type="number" id="komYS" placeholder="0" oninput="komHesapla()"></div>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:var(--red)" id="komYSSonuc"></div>
+      </div>
+      <div class="kom-box">
+        <div class="kom-header"><span class="kom-platform">Getir</span><span class="kom-rate">%14 + KDV %20</span></div>
+        <div class="fg"><label>Aylık Getir Cirosu (₺)</label>
+          <div class="pfx"><span class="pfx-sign">₺</span><input type="number" id="komGetir" placeholder="0" oninput="komHesapla()"></div>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:var(--red)" id="komGetirSonuc"></div>
+      </div>
+      <div class="kom-box">
+        <div class="kom-header"><span class="kom-platform">Yemek Kartları</span><span class="kom-rate">%2,5</span></div>
+        <div class="fg"><label>Aylık Yemek Kartı Cirosu (₺)</label>
+          <div class="pfx"><span class="pfx-sign">₺</span><input type="number" id="komYemekKart" placeholder="0" oninput="komHesapla()"></div>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:var(--red)" id="komYemekKartSonuc"></div>
+      </div>
+      <div class="kom-box">
+        <div class="kom-header"><span class="kom-platform">Kredi Kartı</span><span class="kom-rate">%2,5</span></div>
+        <div class="fg"><label>Aylık Kredi Kartı Cirosu (₺)</label>
+          <div class="pfx"><span class="pfx-sign">₺</span><input type="number" id="komKredi" placeholder="0" oninput="komHesapla()"></div>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:var(--red)" id="komKrediSonuc"></div>
+      </div>
+    </div>
+
+    <div class="kom-box" style="background:var(--ink);color:#fff;border:none">
+      <div style="font-size:11px;opacity:.6;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Aylık Toplam Komisyon Özeti</div>
+      <div class="kom-row" style="color:#fff;border-color:rgba(255,255,255,.1)"><span>Toplam Brüt Ciro</span><span id="komToplCiro" style="color:var(--gold-light)">₺0</span></div>
+      <div class="kom-row" style="color:#fff;border-color:rgba(255,255,255,.1)"><span>Platform Komisyonları</span><span id="komToplKom" style="color:#fca5a5">₺0</span></div>
+      <div class="kom-row" style="color:#fff;border-color:rgba(255,255,255,.1)"><span>Komisyon KDV'leri</span><span id="komToplKomKDV" style="color:#fca5a5">₺0</span></div>
+      <div class="kom-row" style="color:#fff;border-color:rgba(255,255,255,.1)"><span>Toplam Ciro KDV (%10)</span><span id="komToplCiroKDV" style="color:#fca5a5">₺0</span></div>
+      <div class="kom-row" style="color:var(--gold-light);font-size:15px;border-color:rgba(255,255,255,.1)"><span>Net Kazanç</span><span id="komToplNet">₺0</span></div>
+    </div>
+
+    <button class="btn btn-primary" style="margin-top:10px" onclick="komKaydet()">💾 Kaydet</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Komisyon Geçmişi</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Ay</th><th>Şube</th><th>Brüt</th><th>Kom.</th><th>Net</th></tr></thead>
+        <tbody id="komTblBody"><tr><td colspan="5" class="empty-msg">Kayıt yok</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ RAPOR ══════════ -->
+<div id="tab-rapor" class="tab">
+  <div class="sec-head"><div class="sec-title">Raporlar</div></div>
+
+  <div class="period-tabs">
+    <button class="period-btn active" onclick="setPeriod('gunluk',this)">Günlük</button>
+    <button class="period-btn" onclick="setPeriod('aylik',this)">Aylık</button>
+    <button class="period-btn" onclick="setPeriod('yillik',this)">Yıllık</button>
+  </div>
+
+  <!-- GÜNLÜK -->
+  <div id="rapor-gunluk">
+    <div class="form-row">
+      <div class="fg"><label>Tarih Seç</label><input type="date" id="raporGunTarih" onchange="renderGunlukRapor()"></div>
+      <div class="fg"><label>Şube</label>
+        <select id="raporGunSube" onchange="renderGunlukRapor()">
+          <option value="hepsi">İki Şube</option>
+          <option value="arnavut">Arnavutköy</option>
+          <option value="florya">Florya</option>
+        </select>
+      </div>
+    </div>
+    <div class="rapor-4" id="gunlukOzetGrid"></div>
+    <div class="card" style="margin-top:10px">
+      <div class="card-title">💳 Ödeme Yöntemine Göre</div>
+      <div class="tbl-wrap"><table><thead><tr><th>Yöntem</th><th>Brüt</th><th>Kom.</th><th>Net</th></tr></thead>
+      <tbody id="gunlukOdemeTbl"><tr><td colspan="4" class="empty-msg">Veri yok</td></tr></tbody></table></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🗑 Fire Özeti</div>
+      <div class="tbl-wrap"><table><thead><tr><th>Ürün</th><th>Miktar</th><th>Maliyet</th></tr></thead>
+      <tbody id="gunlukFireTbl"><tr><td colspan="3" class="empty-msg">Fire yok</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- AYLIK -->
+  <div id="rapor-aylik" style="display:none">
+    <div class="form-row">
+      <div class="fg"><label>Ay Seç</label><input type="month" id="raporAyTarih" onchange="renderAylikRapor()"></div>
+      <div class="fg"><label>Şube</label>
+        <select id="raporAySube" onchange="renderAylikRapor()">
+          <option value="hepsi">İki Şube</option>
+          <option value="arnavut">Arnavutköy</option>
+          <option value="florya">Florya</option>
+        </select>
+      </div>
+    </div>
+    <div class="rapor-4" id="aylikOzetGrid"></div>
+    <div class="card" style="margin-top:10px">
+      <div class="card-title">📅 Gün Gün Ciro</div>
+      <div class="tbl-wrap"><table><thead><tr><th>Tarih</th><th>Brüt Ciro</th><th>Net Ciro</th><th>Fire</th></tr></thead>
+      <tbody id="aylikGunTbl"><tr><td colspan="4" class="empty-msg">Veri yok</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- YILLIK -->
+  <div id="rapor-yillik" style="display:none">
+    <div class="form-row">
+      <div class="fg"><label>Yıl</label>
+        <select id="raporYil" onchange="renderYillikRapor()"></select>
+      </div>
+      <div class="fg"><label>Şube</label>
+        <select id="raporYilSube" onchange="renderYillikRapor()">
+          <option value="hepsi">İki Şube</option>
+          <option value="arnavut">Arnavutköy</option>
+          <option value="florya">Florya</option>
+        </select>
+      </div>
+    </div>
+    <div class="rapor-4" id="yillikOzetGrid"></div>
+    <div class="card" style="margin-top:10px">
+      <div class="card-title">📆 Ay Ay Ciro</div>
+      <div class="tbl-wrap"><table><thead><tr><th>Ay</th><th>Brüt Ciro</th><th>Net Ciro</th><th>Fire</th></tr></thead>
+      <tbody id="yillikAyTbl"><tr><td colspan="4" class="empty-msg">Veri yok</td></tr></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+// VERİ YAPISI
+// ══════════════════════════════════════════
+const URUNLER = [
+  { id:'kazandibi',    ad:'Kazandibi',     fiyat:79.21, kdv:0.01, birim:'adet' },
+  { id:'tavukgogusu',  ad:'Tavukgöğsü',    fiyat:79.21, kdv:0.01, birim:'adet' },
+  { id:'sutlac',       ad:'Sütlaç',        fiyat:79.21, kdv:0.01, birim:'adet' },
+  { id:'supangle',     ad:'Supangle',      fiyat:79.21, kdv:0.01, birim:'adet' },
+  { id:'keskul',       ad:'Keşkül',        fiyat:79.21, kdv:0.01, birim:'adet' },
+  { id:'sakizli',      ad:'Sakızlı',       fiyat:79.21, kdv:0.01, birim:'adet' },
+  { id:'tralice',      ad:'Traliçe',       fiyat:79.21, kdv:0.01, birim:'adet' },
+  { id:'asure',        ad:'Aşure',         fiyat:79.21, kdv:0.01, birim:'adet' },
+  { id:'magnolia',     ad:'Magnolia',      fiyat:69.31, kdv:0.01, birim:'adet' },
+  { id:'muhallebi',    ad:'Muhallebi',     fiyat:69.31, kdv:0.01, birim:'adet' },
+  { id:'cikolatasosu', ad:'Çikolata Sosu', fiyat:207.92,kdv:0.01, birim:'kg'   },
+  { id:'parusa',       ad:'Paruşa',        fiyat:207.92,kdv:0.01, birim:'kg'   },
+  { id:'ekler',        ad:'Ekler',         fiyat:207.92,kdv:0.01, birim:'kg'   },
+];
+
+const KOMISYONLAR = {
+  trendyol:     { oran:0.13,   kdv:0.20, ad:'Trendyol'      },
+  yemeksepeti:  { oran:0.135,  kdv:0.20, ad:'Yemek Sepeti'  },
+  getir:        { oran:0.14,   kdv:0.20, ad:'Getir'          },
+  yemekkarti:   { oran:0.025,  kdv:0,    ad:'Yemek Kartları' },
+  kredi:        { oran:0.025,  kdv:0,    ad:'Kredi Kartı'    },
+  nakit:        { oran:0,      kdv:0,    ad:'Nakit'           },
+};
+const CIRO_KDV = 0.10;
+
+// Aktif şube seçimleri
+let aktifSube = { kasa:'arnavut', urun:'arnavut', fire:'arnavut' };
+
+// Veri depoları (session bazlı - localStorage ile kalıcı)
+function loadData() {
+  try { return JSON.parse(localStorage.getItem('bp_data') || '{}'); } catch { return {}; }
+}
+function saveData(d) { localStorage.setItem('bp_data', JSON.stringify(d)); }
+let DB = loadData();
+if (!DB.kasaKayitlar) DB.kasaKayitlar = [];
+if (!DB.urunKayitlar) DB.urunKayitlar = [];
+if (!DB.fireKayitlar) DB.fireKayitlar = [];
+if (!DB.komKayitlar)  DB.komKayitlar  = [];
+
+// ══════════════════════════════════════════
+// YARDIMCI FONKSİYONLAR
+// ══════════════════════════════════════════
+const tl = (n) => '₺' + (+n).toLocaleString('tr-TR', {minimumFractionDigits:2,maximumFractionDigits:2});
+const todayStr = () => new Date().toISOString().slice(0,10);
+const nowTime  = () => new Date().toTimeString().slice(0,5);
+const monthStr = () => new Date().toISOString().slice(0,7);
+const yearStr  = () => new Date().getFullYear().toString();
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+function netHesapla(brut, odeme) {
+  const k = KOMISYONLAR[odeme];
+  if (!k) return brut;
+  const kom = brut * k.oran;
+  const komKdv = kom * k.kdv;
+  const ciroKdv = brut * CIRO_KDV;
+  return brut - kom - komKdv - ciroKdv;
+}
+
+function komDetay(brut, odeme) {
+  const k = KOMISYONLAR[odeme];
+  const kom = brut * (k ? k.oran : 0);
+  const komKdv = kom * (k ? k.kdv : 0);
+  const ciroKdv = brut * CIRO_KDV;
+  const net = brut - kom - komKdv - ciroKdv;
+  return { kom, komKdv, ciroKdv, net };
+}
+
+function urunKdvFiyat(urun) {
+  return urun.fiyat * (1 + urun.kdv);
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('headerDate').textContent = new Date().toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('kasaTarih').value  = todayStr();
+  document.getElementById('urunTarih').value  = todayStr();
+  document.getElementById('fireTarih').value  = todayStr();
+  document.getElementById('komAy').value      = monthStr();
+  document.getElementById('raporGunTarih').value = todayStr();
+  document.getElementById('raporAyTarih').value  = monthStr();
+
+  // Yıl selecti doldur
+  const yilSel = document.getElementById('raporYil');
+  for (let y = 2024; y <= 2030; y++) {
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y;
+    if (y == new Date().getFullYear()) o.selected = true;
+    yilSel.appendChild(o);
+  }
+
+  buildUrunGirisForms();
+  buildFireGirisForms();
+  updateOzetTab();
+  renderKasaTablo();
+  renderGunlukRapor();
+  updateSubeCiroBadges();
+});
+
+// ══════════════════════════════════════════
+// TAB & SUBE SEÇİMİ
+// ══════════════════════════════════════════
+function goTab(id, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function selectSube(context, sube) {
+  aktifSube[context] = sube;
+  ['arnavut','florya'].forEach(s => {
+    const el = document.getElementById(context + 'Tab' + s.charAt(0).toUpperCase() + s.slice(1));
+    if (el) { el.classList.remove('active'); if (s === sube) el.classList.add('active'); }
+  });
+  // Yemek kartı sadece Arnavutköy'de
+  if (context === 'kasa') {
+    const ykOpt = document.getElementById('yemekKartiOpt');
+    if (ykOpt) ykOpt.style.display = sube === 'arnavut' ? '' : 'none';
+    kasaHesapla();
+  }
+  if (context === 'urun') calcUrunMaliyet();
+  if (context === 'fire') calcFireKayip();
+}
+
+// ══════════════════════════════════════════
+// KASA
+// ══════════════════════════════════════════
+function kasaHesapla() {
+  const brut = parseFloat(document.getElementById('kasaTutar').value) || 0;
+  const odeme = document.getElementById('kasaOdeme').value;
+  const panel = document.getElementById('kasaKomOnizleme');
+  if (brut <= 0 || odeme === 'nakit') { panel.style.display = 'none'; return; }
+  panel.style.display = 'block';
+  const k = KOMISYONLAR[odeme];
+  const d = komDetay(brut, odeme);
+  document.getElementById('kasaKomPlatform').textContent = k.ad;
+  document.getElementById('kasaKomOran').textContent = (k.oran*100).toFixed(1) + '% + %10 KDV';
+  document.getElementById('kasaKomBrut').textContent = tl(brut);
+  document.getElementById('kasaKomSatir1L').textContent = k.ad + ' Komisyon (' + (k.oran*100).toFixed(1) + '%)';
+  document.getElementById('kasaKomSatir1V').textContent = '−' + tl(d.kom);
+  document.getElementById('kasaKomKDV').textContent = '−' + tl(d.komKdv);
+  document.getElementById('kasaKomCiroKDV').textContent = '−' + tl(d.ciroKdv);
+  document.getElementById('kasaKomNet').textContent = tl(d.net);
+}
+
+function kasaKaydet() {
+  const brut = parseFloat(document.getElementById('kasaTutar').value);
+  if (!brut || brut <= 0) { showToast('⚠️ Geçerli tutar girin'); return; }
+  const odeme = document.getElementById('kasaOdeme').value;
+  const d = komDetay(brut, odeme);
+  const kayit = {
+    id: Date.now(),
+    tarih: document.getElementById('kasaTarih').value,
+    saat: nowTime(),
+    sube: aktifSube.kasa,
+    odeme,
+    brut,
+    kom: d.kom,
+    komKdv: d.komKdv,
+    ciroKdv: d.ciroKdv,
+    net: d.net,
+    aciklama: document.getElementById('kasaAciklama').value
+  };
+  DB.kasaKayitlar.unshift(kayit);
+  saveData(DB);
+  document.getElementById('kasaTutar').value = '';
+  document.getElementById('kasaAciklama').value = '';
+  document.getElementById('kasaKomOnizleme').style.display = 'none';
+  renderKasaTablo();
+  updateOzetTab();
+  updateSubeCiroBadges();
+  showToast('✅ Kayıt eklendi');
+}
+
+function renderKasaTablo() {
+  const today = document.getElementById('kasaTarih').value || todayStr();
+  const kayitlar = DB.kasaKayitlar.filter(k => k.tarih === today);
+  const tbody = document.getElementById('kasaTblBody');
+  if (!kayitlar.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-msg">Kayıt yok</td></tr>'; return; }
+  tbody.innerHTML = kayitlar.map(k => `
+    <tr>
+      <td>${k.saat}</td>
+      <td><span class="badge ${k.sube==='arnavut'?'badge-green':'badge-blue'}">${k.sube==='arnavut'?'Arnavutköy':'Florya'}</span></td>
+      <td>${KOMISYONLAR[k.odeme]?.ad || k.odeme}</td>
+      <td>${tl(k.brut)}</td>
+      <td style="color:var(--red)">${k.kom>0?'−'+tl(k.kom+k.komKdv):'—'}</td>
+      <td style="font-weight:700;color:var(--green)">${tl(k.net)}</td>
+    </tr>`).join('');
+}
+
+function updateSubeCiroBadges() {
+  const today = todayStr();
+  ['arnavut','florya'].forEach(s => {
+    const brut = DB.kasaKayitlar.filter(k => k.sube===s && k.tarih===today).reduce((a,k)=>a+k.brut,0);
+    const el = document.getElementById('kasaCiro' + s.charAt(0).toUpperCase() + s.slice(1));
+    if (el) el.textContent = tl(brut) + ' bugün';
+  });
+}
+
+// ══════════════════════════════════════════
+// ÜRÜN GİRİŞİ
+// ══════════════════════════════════════════
+function buildUrunGirisForms() {
+  const html = URUNLER.map(u => `
+    <div class="stok-row">
+      <div><div class="stok-name">${u.ad}</div><div class="stok-fiyat">${tl(urunKdvFiyat(u))} / ${u.birim} (KDV dahil)</div></div>
+      <input class="stok-input" type="number" min="0" step="${u.birim==='kg'?'0.1':'1'}" placeholder="0"
+        id="urun_${u.id}" oninput="calcUrunMaliyet()">
+      <div class="stok-unit">${u.birim}</div>
+    </div>`).join('');
+  document.getElementById('urunGirisListesi').innerHTML = html;
+}
+
+function calcUrunMaliyet() {
+  let toplam = 0;
+  URUNLER.forEach(u => {
+    const val = parseFloat(document.getElementById('urun_' + u.id)?.value) || 0;
+    toplam += val * urunKdvFiyat(u);
+  });
+  document.getElementById('urunToplamMaliyet').textContent = tl(toplam);
+  const sube = aktifSube.urun;
+  const el = document.getElementById('urunMal' + sube.charAt(0).toUpperCase() + sube.slice(1));
+  if (el) el.textContent = tl(toplam) + ' maliyet';
+}
+
+function urunKaydet() {
+  const tarih = document.getElementById('urunTarih').value;
+  const sube = aktifSube.urun;
+  let detay = {};
+  let toplam = 0;
+  URUNLER.forEach(u => {
+    const val = parseFloat(document.getElementById('urun_' + u.id)?.value) || 0;
+    if (val > 0) { detay[u.id] = val; toplam += val * urunKdvFiyat(u); }
+  });
+  if (toplam === 0) { showToast('⚠️ En az 1 ürün girin'); return; }
+  DB.urunKayitlar.push({ id:Date.now(), tarih, sube, detay, toplam });
+  saveData(DB);
+  URUNLER.forEach(u => { const el = document.getElementById('urun_'+u.id); if(el) el.value=''; });
+  calcUrunMaliyet();
+  updateOzetTab();
+  showToast('✅ Ürün girişi kaydedildi');
+}
+
+// ══════════════════════════════════════════
+// FIRE
+// ══════════════════════════════════════════
+function buildFireGirisForms() {
+  const html = URUNLER.map(u => `
+    <div class="fire-row">
+      <div><div class="fire-name">${u.ad}</div></div>
+      <input class="fire-input" type="number" min="0" step="${u.birim==='kg'?'0.1':'1'}" placeholder="0"
+        id="fire_${u.id}" oninput="calcFireKayip()">
+      <div class="stok-unit">${u.birim}</div>
+      <div class="fire-maliyet" id="fireM_${u.id}">₺0</div>
+    </div>`).join('');
+  document.getElementById('fireGirisListesi').innerHTML = html;
+}
+
+function calcFireKayip() {
+  let toplam = 0;
+  URUNLER.forEach(u => {
+    const val = parseFloat(document.getElementById('fire_' + u.id)?.value) || 0;
+    const maliyet = val * urunKdvFiyat(u);
+    toplam += maliyet;
+    const mel = document.getElementById('fireM_' + u.id);
+    if (mel) mel.textContent = maliyet > 0 ? tl(maliyet) : '₺0';
+  });
+  document.getElementById('fireToplamKayip').textContent = tl(toplam);
+  const sube = aktifSube.fire;
+  const el = document.getElementById('fireKayip' + sube.charAt(0).toUpperCase() + sube.slice(1));
+  if (el) el.textContent = tl(toplam) + ' kayıp';
+}
+
+function fireKaydet() {
+  const tarih = document.getElementById('fireTarih').value;
+  const sube = aktifSube.fire;
+  URUNLER.forEach(u => {
+    const val = parseFloat(document.getElementById('fire_' + u.id)?.value) || 0;
+    if (val > 0) {
+      DB.fireKayitlar.push({ id:Date.now()+Math.random(), tarih, sube, urunId:u.id, urunAd:u.ad, miktar:val, birim:u.birim, maliyet: val*urunKdvFiyat(u) });
+    }
+  });
+  saveData(DB);
+  URUNLER.forEach(u => { const el = document.getElementById('fire_'+u.id); if(el) el.value=''; });
+  calcFireKayip();
+  renderFireTablo();
+  updateOzetTab();
+  showToast('✅ Fire kaydedildi');
+}
+
+function renderFireTablo() {
+  const tbody = document.getElementById('fireTblBody');
+  if (!DB.fireKayitlar.length) { tbody.innerHTML='<tr><td colspan="5" class="empty-msg">Kayıt yok</td></tr>'; return; }
+  tbody.innerHTML = DB.fireKayitlar.slice().reverse().slice(0,30).map(f => `
+    <tr>
+      <td>${f.tarih}</td>
+      <td><span class="badge ${f.sube==='arnavut'?'badge-green':'badge-blue'}">${f.sube==='arnavut'?'Arnavutköy':'Florya'}</span></td>
+      <td>${f.urunAd}</td>
+      <td>${f.miktar} ${f.birim}</td>
+      <td style="color:var(--red);font-weight:600">${tl(f.maliyet)}</td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════════════
+// KOMİSYON
+// ══════════════════════════════════════════
+function komHesapla() {
+  const vals = {
+    trendyol:    parseFloat(document.getElementById('komTrendyol').value) || 0,
+    yemeksepeti: parseFloat(document.getElementById('komYS').value) || 0,
+    getir:       parseFloat(document.getElementById('komGetir').value) || 0,
+    yemekkarti:  parseFloat(document.getElementById('komYemekKart').value) || 0,
+    kredi:       parseFloat(document.getElementById('komKredi').value) || 0,
+  };
+  let totBrut=0, totKom=0, totKomKdv=0, totCiroKdv=0;
+  ['trendyol','yemeksepeti','getir','yemekkarti','kredi'].forEach(k => {
+    const brut = vals[k];
+    const d = komDetay(brut, k);
+    totBrut += brut; totKom += d.kom; totKomKdv += d.komKdv; totCiroKdv += d.ciroKdv;
+    const el = document.getElementById('kom' + {trendyol:'Trendyol',yemeksepeti:'YS',getir:'Getir',yemekkarti:'YemekKart',kredi:'Kredi'}[k] + 'Sonuc');
+    if (el && brut > 0) el.textContent = `Komisyon: ${tl(d.kom)} + KDV: ${tl(d.komKdv)} + Ciro KDV: ${tl(d.ciroKdv)} → Net: ${tl(d.net)}`;
+    else if (el) el.textContent = '';
+  });
+  document.getElementById('komToplCiro').textContent = tl(totBrut);
+  document.getElementById('komToplKom').textContent  = '−' + tl(totKom);
+  document.getElementById('komToplKomKDV').textContent = '−' + tl(totKomKdv);
+  document.getElementById('komToplCiroKDV').textContent = '−' + tl(totCiroKdv);
+  document.getElementById('komToplNet').textContent  = tl(totBrut - totKom - totKomKdv - totCiroKdv);
+}
+
+function komKaydet() {
+  const brut = parseFloat(document.getElementById('komTrendyol').value||0) + parseFloat(document.getElementById('komYS').value||0) + parseFloat(document.getElementById('komGetir').value||0) + parseFloat(document.getElementById('komYemekKart').value||0) + parseFloat(document.getElementById('komKredi').value||0);
+  if (brut === 0) { showToast('⚠️ En az 1 değer girin'); return; }
+  const net = parseFloat(document.getElementById('komToplNet').textContent.replace(/[₺.,]/g,'').replace(',','.')) || 0;
+  const totKom = brut - parseFloat(document.getElementById('komToplNet').textContent.replace('₺','').replace('.','').replace(',','.') || 0);
+  DB.komKayitlar.push({ id:Date.now(), ay: document.getElementById('komAy').value, sube: document.getElementById('komSube').value, brut, netText: document.getElementById('komToplNet').textContent, komText: document.getElementById('komToplKom').textContent });
+  saveData(DB);
+  renderKomTablo();
+  showToast('✅ Komisyon kaydedildi');
+}
+
+function renderKomTablo() {
+  const tbody = document.getElementById('komTblBody');
+  if (!DB.komKayitlar.length) { tbody.innerHTML='<tr><td colspan="5" class="empty-msg">Kayıt yok</td></tr>'; return; }
+  tbody.innerHTML = DB.komKayitlar.slice().reverse().map(k => `
+    <tr>
+      <td>${k.ay}</td>
+      <td><span class="badge ${k.sube==='arnavut'?'badge-green':'badge-blue'}">${k.sube==='arnavut'?'Arnavutköy':'Florya'}</span></td>
+      <td>${tl(k.brut)}</td>
+      <td style="color:var(--red)">${k.komText}</td>
+      <td style="font-weight:700;color:var(--green)">${k.netText}</td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════════════
+// ÖZET TAB
+// ══════════════════════════════════════════
+function updateOzetTab() {
+  const today = todayStr();
+  const kasaBugün = DB.kasaKayitlar.filter(k => k.tarih === today);
+  const totalBrut = kasaBugün.reduce((a,k) => a+k.brut, 0);
+  const totalNet  = kasaBugün.reduce((a,k) => a+k.net, 0);
+  const totalKdv  = kasaBugün.reduce((a,k) => a+k.ciroKdv, 0);
+
+  document.getElementById('heroGross').textContent = tl(totalBrut);
+  document.getElementById('heroNet').textContent   = `Net: ${tl(totalNet)} · KDV: ${tl(totalKdv)}`;
+
+  ['arnavut','florya'].forEach(s => {
+    const sk = kasaBugün.filter(k => k.sube === s);
+    const sb = sk.reduce((a,k)=>a+k.brut,0);
+    const sn = sk.reduce((a,k)=>a+k.net,0);
+    const pre = s.charAt(0).toUpperCase() + s.slice(1);
+    document.getElementById('oz'+pre).textContent = tl(sb);
+    document.getElementById('oz'+pre+'Net').textContent = 'Net: ' + tl(sn);
+  });
+
+  const maliyetBugün = DB.urunKayitlar.filter(u => u.tarih === today).reduce((a,u)=>a+u.toplam, 0);
+  const fireBugün = DB.fireKayitlar.filter(f => f.tarih === today).reduce((a,f)=>a+f.maliyet, 0);
+  document.getElementById('ozMaliyet').textContent = tl(maliyetBugün);
+  document.getElementById('ozFire').textContent    = tl(fireBugün);
+
+  renderSonIslemler();
+}
+
+function renderSonIslemler() {
+  const tbody = document.getElementById('sonIslemTbody');
+  const kayitlar = DB.kasaKayitlar.slice(0, 8);
+  if (!kayitlar.length) { tbody.innerHTML='<tr><td colspan="5" class="empty-msg">Henüz kayıt yok</td></tr>'; return; }
+  tbody.innerHTML = kayitlar.map(k => `
+    <tr>
+      <td>${k.saat}</td>
+      <td><span class="badge ${k.sube==='arnavut'?'badge-green':'badge-blue'}" style="font-size:10px">${k.sube==='arnavut'?'ARN':'FLR'}</span></td>
+      <td style="font-size:11px">${KOMISYONLAR[k.odeme]?.ad||k.odeme}</td>
+      <td>${tl(k.brut)}</td>
+      <td style="color:var(--green);font-weight:600">${tl(k.net)}</td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════════════
+// RAPOR
+// ══════════════════════════════════════════
+function setPeriod(p, btn) {
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['gunluk','aylik','yillik'].forEach(x => {
+    document.getElementById('rapor-'+x).style.display = x===p ? 'block' : 'none';
+  });
+  if (p==='gunluk') renderGunlukRapor();
+  if (p==='aylik')  renderAylikRapor();
+  if (p==='yillik') renderYillikRapor();
+}
+
+function raporOzetBox(label, val, sub, color) {
+  return `<div class="ozet-box">
+    <div class="ozet-label">${label}</div>
+    <div class="ozet-val" style="font-size:22px;color:${color||'var(--ink)'}">${val}</div>
+    ${sub?`<div class="ozet-sub">${sub}</div>`:''}
+  </div>`;
+}
+
+function renderGunlukRapor() {
+  const tarih = document.getElementById('raporGunTarih').value;
+  const subeF = document.getElementById('raporGunSube').value;
+  let kasaK = DB.kasaKayitlar.filter(k => k.tarih === tarih);
+  if (subeF !== 'hepsi') kasaK = kasaK.filter(k => k.sube === subeF);
+
+  const brut = kasaK.reduce((a,k)=>a+k.brut,0);
+  const net  = kasaK.reduce((a,k)=>a+k.net,0);
+  const kdv  = kasaK.reduce((a,k)=>a+k.ciroKdv,0);
+  const kom  = kasaK.reduce((a,k)=>a+k.kom+k.komKdv,0);
+
+  let fireK = DB.fireKayitlar.filter(f => f.tarih === tarih);
+  if (subeF !== 'hepsi') fireK = fireK.filter(f => f.sube === subeF);
+  const fireToplam = fireK.reduce((a,f)=>a+f.maliyet,0);
+
+  document.getElementById('gunlukOzetGrid').innerHTML =
+    raporOzetBox('Brüt Ciro', tl(brut), tarih) +
+    raporOzetBox('Net Ciro', tl(net), 'KDV sonrası', 'var(--green)') +
+    raporOzetBox('KDV (%10)', tl(kdv), 'Ciro KDV', 'var(--red)') +
+    raporOzetBox('Fire', tl(fireToplam), 'Çöpe giden', 'var(--red)');
+
+  // Ödeme bazlı
+  const odemeGrup = {};
+  kasaK.forEach(k => {
+    if (!odemeGrup[k.odeme]) odemeGrup[k.odeme] = {brut:0,kom:0,net:0};
+    odemeGrup[k.odeme].brut += k.brut;
+    odemeGrup[k.odeme].kom  += k.kom + k.komKdv;
+    odemeGrup[k.odeme].net  += k.net;
+  });
+  const oTbody = document.getElementById('gunlukOdemeTbl');
+  const oRows = Object.entries(odemeGrup);
+  oTbody.innerHTML = oRows.length ? oRows.map(([o,v]) => `
+    <tr><td>${KOMISYONLAR[o]?.ad||o}</td><td>${tl(v.brut)}</td><td style="color:var(--red)">${v.kom>0?'−'+tl(v.kom):'—'}</td><td style="font-weight:700;color:var(--green)">${tl(v.net)}</td></tr>`).join('')
+    : '<tr><td colspan="4" class="empty-msg">Veri yok</td></tr>';
+
+  // Fire
+  const fTbody = document.getElementById('gunlukFireTbl');
+  fTbody.innerHTML = fireK.length ? fireK.map(f=>`
+    <tr><td>${f.urunAd}</td><td>${f.miktar} ${f.birim}</td><td style="color:var(--red)">${tl(f.maliyet)}</td></tr>`).join('')
+    : '<tr><td colspan="3" class="empty-msg">Fire yok</td></tr>';
+}
+
+function renderAylikRapor() {
+  const ay = document.getElementById('raporAyTarih').value; // YYYY-MM
+  const subeF = document.getElementById('raporAySube').value;
+  let kasaK = DB.kasaKayitlar.filter(k => k.tarih?.startsWith(ay));
+  if (subeF !== 'hepsi') kasaK = kasaK.filter(k => k.sube === subeF);
+  let fireK = DB.fireKayitlar.filter(f => f.tarih?.startsWith(ay));
+  if (subeF !== 'hepsi') fireK = fireK.filter(f => f.sube === subeF);
+
+  const brut = kasaK.reduce((a,k)=>a+k.brut,0);
+  const net  = kasaK.reduce((a,k)=>a+k.net,0);
+  const kdv  = kasaK.reduce((a,k)=>a+k.ciroKdv,0);
+  const fireToplam = fireK.reduce((a,f)=>a+f.maliyet,0);
+
+  document.getElementById('aylikOzetGrid').innerHTML =
+    raporOzetBox('Aylık Brüt', tl(brut), ay) +
+    raporOzetBox('Aylık Net', tl(net), 'KDV sonrası', 'var(--green)') +
+    raporOzetBox('KDV Toplam', tl(kdv), '', 'var(--red)') +
+    raporOzetBox('Fire Toplam', tl(fireToplam), '', 'var(--red)');
+
+  // Gün gün
+  const gunler = {};
+  kasaK.forEach(k => { if(!gunler[k.tarih]) gunler[k.tarih]={brut:0,net:0}; gunler[k.tarih].brut+=k.brut; gunler[k.tarih].net+=k.net; });
+  fireK.forEach(f => { if(!gunler[f.tarih]) gunler[f.tarih]={brut:0,net:0,fire:0}; if(!gunler[f.tarih].fire) gunler[f.tarih].fire=0; gunler[f.tarih].fire+=f.maliyet; });
+
+  const ayGunTbl = document.getElementById('aylikGunTbl');
+  const sortedGunler = Object.entries(gunler).sort(([a],[b])=>a.localeCompare(b));
+  ayGunTbl.innerHTML = sortedGunler.length ? sortedGunler.map(([t,v])=>`
+    <tr><td>${t}</td><td>${tl(v.brut)}</td><td style="color:var(--green);font-weight:600">${tl(v.net)}</td><td style="color:var(--red)">${tl(v.fire||0)}</td></tr>`).join('')
+    : '<tr><td colspan="4" class="empty-msg">Veri yok</td></tr>';
+}
+
+function renderYillikRapor() {
+  const yil = document.getElementById('raporYil').value;
+  const subeF = document.getElementById('raporYilSube').value;
+  let kasaK = DB.kasaKayitlar.filter(k => k.tarih?.startsWith(yil));
+  if (subeF !== 'hepsi') kasaK = kasaK.filter(k => k.sube === subeF);
+  let fireK = DB.fireKayitlar.filter(f => f.tarih?.startsWith(yil));
+  if (subeF !== 'hepsi') fireK = fireK.filter(f => f.sube === subeF);
+
+  const brut = kasaK.reduce((a,k)=>a+k.brut,0);
+  const net  = kasaK.reduce((a,k)=>a+k.net,0);
+  const kdv  = kasaK.reduce((a,k)=>a+k.ciroKdv,0);
+  const fireToplam = fireK.reduce((a,f)=>a+f.maliyet,0);
+
+  document.getElementById('yillikOzetGrid').innerHTML =
+    raporOzetBox('Yıllık Brüt', tl(brut), yil) +
+    raporOzetBox('Yıllık Net', tl(net), 'KDV sonrası', 'var(--green)') +
+    raporOzetBox('KDV Toplam', tl(kdv), '', 'var(--red)') +
+    raporOzetBox('Fire Toplam', tl(fireToplam), '', 'var(--red)');
+
+  const aylar = {};
+  const ayAd = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
+  kasaK.forEach(k => { const m = k.tarih?.slice(0,7); if(!aylar[m]) aylar[m]={brut:0,net:0,fire:0}; aylar[m].brut+=k.brut; aylar[m].net+=k.net; });
+  fireK.forEach(f => { const m = f.tarih?.slice(0,7); if(!aylar[m]) aylar[m]={brut:0,net:0,fire:0}; aylar[m].fire+=f.maliyet; });
+
+  const tbl = document.getElementById('yillikAyTbl');
+  const sorted = Object.entries(aylar).sort(([a],[b])=>a.localeCompare(b));
+  tbl.innerHTML = sorted.length ? sorted.map(([m,v])=>`
+    <tr><td>${ayAd[parseInt(m.slice(5))-1]} ${m.slice(0,4)}</td><td>${tl(v.brut)}</td><td style="color:var(--green);font-weight:600">${tl(v.net)}</td><td style="color:var(--red)">${tl(v.fire)}</td></tr>`).join('')
+    : '<tr><td colspan="4" class="empty-msg">Veri yok</td></tr>';
+}
+</script>
+</body>
+</html>
